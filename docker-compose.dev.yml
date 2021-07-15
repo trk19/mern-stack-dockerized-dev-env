@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  db:
+    image: mongo:3.6.22-xenial
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mern-app
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile.dev
+    image: backend:dev
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    networks:
+      - mern-app
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.dev
+    image: frontend:dev
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - backend
+    networks:
+      - mern-app
+    restart: always
+    volumes:
+      - ./frontend:/usr/src/app/
+      - /usr/src/app/node_modules
+
+networks:
+  mern-app:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
