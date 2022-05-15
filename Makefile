@@ -1,19 +1,10 @@
-builddev:
-	cd backend && $(MAKE) buildbackdev
-	cd frontend && $(MAKE) buildfrontdev
-
-buildprod:
-	cd backend && $(MAKE) buildbackprod
-	cd frontend && $(MAKE) buildfrontprod
+build_dev:
+	cd backend && $(MAKE) build_back_dev
+	cd frontend && $(MAKE) build_front_dev
 	
-composerundev:
-	docker-compose -f docker-compose.dev.yml up --build
+compose_run_dev:
+	docker-compose -f docker-compose.dev.yml up 
 
-composerunprod:
-	docker-compose -f docker-compose.prod.yml up --build 
-
-composestopdev:
+compose_stop_dev:
 	docker-compose -f docker-compose.dev.yml down
 
-composestopprod:
-	docker-compose -f docker-compose.prod.yml down
