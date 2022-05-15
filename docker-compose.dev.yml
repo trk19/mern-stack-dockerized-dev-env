@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: mongo:3.6.22-xenial
+    image: mongo:latest
     ports:
       - "27017:27017"
     volumes:
@@ -23,6 +23,9 @@ services:
     networks:
       - mern-app
     restart: always
+    volumes:
+      - ./backend:/usr/src/app/
+      - /usr/src/app/node_modules
 
   frontend:
     build:
